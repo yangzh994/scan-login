@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+ </head>
+ <body>
+		<img id="qrcode" src=""></img>
+ </body>
+	<script>
+		var token;
+		$(function(){
+			$.get("http://localhost:8080/generateCode/create",function(data){
+			   var qrcode = "data:image/png;base64," + data.qrcode;
+			   token = data.token;
+			   $("#qrcode").attr("src",qrcode);
+			});
+		})
+
+		var time = setInterval(function(){
+			$.get("http://localhost:8080/checkLogin/check?token="+token,function(data){
+				if(data != "-1"){
+					clearInterval(time);
+					window.location.href = "http://localhost?token="+token;
+				}
+			});
+		},1000);
+	</script>
+</html>

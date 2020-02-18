@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <title>首页</title>
+ </head>
+ <body>
+	
+ </body>
+
+ <script>
+	
+	
+	$(function(){
+		var url = location.href;
+		var token = getParamsByUrl(url,token);
+		$(function(){
+			$.get("http://localhost:8080/user/info?token="+ token,function(data){
+				if(data.code == "-1"){
+					window.location.href = "http://localhost/qrcode.html";
+				}
+				if(data.code == "0"){
+					alert(data.data.nickname);
+					alert(data.data.password);
+				}
+			});
+		})
+		
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 获取地址栏中的参数
+	 * @param  {string} url 地址字符
+	 * @param  {string} name 要获取的参数名称    
+	 * @return  {string}     参数名称对应的参数值
+	 */
+
+	function getParamsByUrl(url, name) {
+		var params = url.substr(url.indexOf('?') + 1);
+
+		var param = params.split('&');
+
+		for (var i = 0; i < param.length; i++) {
+			var current = param[i].split('=');
+
+			return current[1];
+
+		}
+		return null;
+	}  
+
+ </script>
+</html>
